@@ -19,7 +19,7 @@ final class Attachments
   public function transform(int $attachmentId, Pipeline $pipeline): Result
   {
     $post = get_post($attachmentId);
-    $path = get_attached_file($attachmentId, true);
+    $path = apply_filters('cloakwp/image-transformations/attachment-source', get_attached_file($attachmentId, true), $attachmentId);
     if (!$post || $post->post_type !== 'attachment' || !$path) {
       throw new TransformationFailed('The attachment has no local image file.');
     }
